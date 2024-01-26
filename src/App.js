@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from "react"; 
+import { CardList } from "./components/cardlist/cardlist.component";
+import { SearchBar } from './components/searchbar/searchbar.component';
+import axios from 'axios';
+
+const handleInput = e => { 
+  console.log(e.target.value) 
+};
 
 function App() {
+  const [monsters, setMonsters] = useState([]);
+  useEffect(() => { 
+    const fetchMonsters = async () => { 
+      const response = await axios("https://jsonplaceholder.typicode.com/user", );
+      const users = await response.json(); 
+      setMonsters(users); 
+    }; 
+    fetchMonsters(); }, []);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Monseter Rolodex</h1>
+      <SearchBar 
+      placeholder='Search Monster' 
+      handleInput={handleInput} 
+      />
+      <CardList monster = {monsters} />
     </div>
-  );
+  )
 }
 
 export default App;
